@@ -1,0 +1,189 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+  <div id="container">
+    <div class="container">
+      <!-- Breadcrumb Start-->
+      <ul class="breadcrumb">
+        <li><a href="{% url 'product:home' %}"><i class="fa fa-home"></i></a></li>
+        <li><a href="{% url 'product:search' %}">جستجو</a></li>
+      </ul>
+      <!-- Breadcrumb End-->
+      <div class="row">
+        <!--Middle Part Start-->
+        <div id="content" class="col-sm-12">
+          {% if search %}<h1 class="title">جستجو - {{title}}</h1>{% endif %}
+          {%if not search%}
+          <h1 class="title">جستجو - {{title}}</h1>
+          <h1>محصولی پیدا نشد !!</h1>
+          {% endif %}
+          <label>شاخص جستجو</label>
+          <div class="row">
+          <form method="POST" action="{% url 'product:search' %}">
+            {% csrf_token %}
+            <div class="col-sm-4">
+              <input type="text" class="form-control" placeholder="جستجو" name="search">
+            </div>
+            <div class="col-sm-3">
+              <input type="submit" class="btn btn-primary" id="button-search" value="جستجو">
+            </div>
+          </form>
+          </div>
+          <br>
+          <div class="product-filter">
+            <div class="row">
+              <div class="col-md-4 col-sm-5">
+                <div class="btn-group">
+                  <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
+                  <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
+                </div>
+                <a href="compare.html" id="compare-total">محصولات مقایسه (0)</a> </div>
+              <div class="col-sm-2 text-right">
+                <label class="control-label" for="input-sort">مرتب سازی :</label>
+              </div>
+              <div class="col-md-3 col-sm-2 text-right">
+                <select id="input-sort" class="form-control col-sm-3">
+                  <option value="" selected="selected">پیشفرض</option>
+                  <option value="">نام (الف - ی)</option>
+                  <option value="">نام (ی - الف)</option>
+                  <option value="">قیمت (کم به زیاد)</option></option>
+                  <option value="">قیمت (زیاد به کم)</option>
+                  <option value="">امتیاز (بیشترین)</option>
+                  <option value="">امتیاز (کمترین)</option>
+                  <option value="">مدل (A - Z)</option>
+                  <option value="">مدل (Z - A)</option>
+                </select>
+              </div>
+              <div class="col-sm-1 text-right">
+                <label class="control-label" for="input-limit">نمایش :</label>
+              </div>
+              <div class="col-sm-2 text-right">
+                <select id="input-limit" class="form-control">
+                  <option value="" selected="selected">20</option>
+                  <option value="">25</option>
+                  <option value="">50</option>
+                  <option value="">75</option>
+                  <option value="">100</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row products-category">
+            {% for product in search %}
+            {% if product.is_special %}
+            <div class="product-layout product-list col-xs-12">
+              <div class="product-thumb">
+                <div class="image"><a href="{% url 'product:product_detail' product.uuid %}"><img src="{{product.image.url}}" alt="{{product.title}}" title=" {{product.title}}" class="img-responsive" /></a></div>
+                <div>
+                  <div class="caption">
+                    <h4><a href="{% url 'product:product_detail' product.uuid %}"> {{product.title}}</a></h4>
+                    <p class="description">{{product.description}}</p>
+                    <p class="price"> <span class="price-new">{{product.get_total_price}} تومان</span> <span class="price-old">{{product.price}} تومان</span> <span class="saving">-{{product.discount}}%</span></p>
+                  </div>
+                  <div class="button-group">
+                    <button class="btn-primary" type="button" onClick=""><span>افزودن به سبد</span></button>
+                    <div class="add-to-links">
+                      <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick=""><i class="fa fa-heart"></i> <span>افزودن به علاقه مندی ها</span></button>
+                      <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick=""><i class="fa fa-exchange"></i> <span>مقایسه این محصول</span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="product-layout product-list col-xs-12">
+              <div class="product-thumb">
+                <div class="image"><a href="{% url 'product:product_detail' product.uuid %}"><img src="{{product.image.url}}" alt="{{product.title}}" title=" {{product.title}}" class="img-responsive" /></a></div>
+                <div>
+                  <div class="caption">
+                    <h4><a href="{% url 'product:product_detail' product.uuid %}"> {{product.title}}</a></h4>
+                    <p class="description">{{product.description}}</p>
+                    <p class="price"> <span class="price-new">{{product.price}} تومان</span></p>
+                  </div>
+                  <div class="button-group">
+                    <button class="btn-primary" type="button" onClick=""><span>افزودن به سبد</span></button>
+                    <div class="add-to-links">
+                      <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick=""><i class="fa fa-heart"></i> <span>افزودن به علاقه مندی ها</span></button>
+                      <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick=""><i class="fa fa-exchange"></i> <span>مقایسه این محصول</span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <ul class="pagination">
+                <li class="active"><span>1</span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">&gt;</a></li>
+                <li><a href="#">&gt;|</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-6 text-right">نمایش 1 تا 12 از 15 (مجموع 2 صفحه)</div>
+          </div>
+        </div>
+        <!--Middle Part End -->
+      </div>
+    </div>
+  </div>
+  <!-- Facebook Side Block Start -->
+  <div id="facebook" class="fb-left sort-order-1">
+    <div class="facebook_icon"><i class="fa fa-facebook"></i></div>
+    <div class="fb-page" data-href="#" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="false">
+      <div class="fb-xfbml-parse-ignore">
+        <blockquote cite="#"><a href="#">سايت شما</a></blockquote>
+      </div>
+    </div>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  </div>
+  <!-- Facebook Side Block End -->
+  <!-- Twitter Side Block Start -->
+  <div id="twitter_footer" class="twit-left sort-order-2">
+    <div class="twitter_icon"><i class="fa fa-twitter"></i></div>
+    <a class="twitter-timeline" href="https://twitter.com/" data-chrome="nofooter noscrollbar transparent" data-theme="light" data-tweet-limit="2" data-related="twitterapi,twitter" data-aria-polite="assertive" data-widget-id="347621595801608192">توییت های @</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
+  <!-- Twitter Side Block End -->
+  <!-- Video Side Block Start -->
+  <div id="video_box" class="vb-left sort-order-3">
+    <div id="video_box_icon"><i class="fa fa-play"></i></div>
+    <p>
+      <iframe allowfullscreen="" src="//www.youtube.com" height="315" width="560"></iframe>
+    </p>
+  </div>
+  <!-- Video Side Block End -->
+  <!-- Custom Side Block Start -->
+  <div id="custom_side_block" class="custom_side_block_left sort-order-4">
+    <div class="custom_side_block_icon"> <i class="fa fa-chevron-right"></i> </div>
+    <table>
+      <tbody>
+        <tr>
+          <td><h2>بلاک های محتوا</h2></td>
+        </tr>
+        <tr>
+          <td><img alt="" src="image/banner/cms-block.jpg"></td>
+        </tr>
+        <tr>
+          <td>میتوانید محتوای دلخواه خود را به این بخش اضافه کنید.</td>
+        </tr>
+        <tr>
+          <td><strong><a href="#">ادامه مطلب</a></strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Custom Side Block End -->
+</div>
+{% endblock content %}

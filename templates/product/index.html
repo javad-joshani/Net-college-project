@@ -1,0 +1,205 @@
+{% extends "_base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+<div id="container">
+  <!-- Feature Box Start-->
+  <div class="container">
+    <div class="custom-feature-box row">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="feature-box fbox_1">
+          <div class="title">ارسال رایگان</div>
+          <p>برای خرید های بیش از 100 هزار تومان</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="feature-box fbox_2">
+          <div class="title">پس فرستادن رایگان</div>
+          <p>بازگشت کالا تا 24 ساعت پس از خرید</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="feature-box fbox_3">
+          <div class="title">کارت هدیه</div>
+          <p>بهترین هدیه برای عزیزان شما</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="feature-box fbox_4">
+          <div class="title">امتیازات خرید</div>
+          <p>از هر خرید امتیاز کسب کرده و از آن بهره بگیرید</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Feature Box End-->
+  <div class="container">
+    <div class="row">
+      <!-- Left Part Start-->
+      <aside id="column-left" class="col-sm-3 hidden-xs">
+        <h3 class="subtitle">پرفروش ها</h3>
+        <div class="side-item">
+          {% for product in many_sold %}
+          <div class="product-thumb clearfix">
+            <div class="image"><a href="{% url 'product:product_detail' product.uuid %}"><img src="{{product.image.url}}" alt="{{product.title}}" title="{{product.title}}" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{% url 'product:product_detail' product.uuid %}">{{product.title}}</a></h4>
+              <p class="price"><span class="price-new">{{product.get_total_price}} تومان</span> <span class="price-old">{{product.price}} تومان</span> <span class="saving">-{{product.discount}}%</span></p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <h3 class="subtitle">ویژه</h3>
+        <div class="side-item">
+          {% for product in special_products %}
+          <div class="product-thumb clearfix">
+            <div class="image"><a href="{% url 'product:product_detail' product.uuid %}"><img src="{{product.image.url}}" alt="{{product.title}}" title="{{product.title}}" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{% url 'product:product_detail' product.uuid %}">{{product.title}}</a></h4>
+              <p class="price"> <span class="price-new">{{product.get_total_price}}</span> <span class="price-old">{{product.price}}</span> <span class="saving">-{{product.discount}}%</span> </p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <h3 class="subtitle">جدیدترین</h3>
+        <div class="side-item">
+          {% for product in new_products %}
+          <div class="product-thumb clearfix">
+            <div class="image"><a href="{% url 'product:product_detail' product.uuid %}"><img src="{{product.image.url}}" alt="{{product.title}}" title="{{product.title}}" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{% url 'product:product_detail' product.uuid %}">{{product.title}}</a></h4>
+              <p class="price">{{product.get_total_price}}</p>
+              <div class="rating">
+                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </aside>
+      <!-- Left Part End-->
+      <!--Middle Part Start-->
+      <div id="content" class="col-sm-9">
+        <!-- Slideshow Start-->
+        <div class="slideshow single-slider owl-carousel">
+          {% for slide in sliders %}
+          <div class="item"> 
+            <a href="{{slide.link}}">
+              <img class="img-responsive" src="{{ slide.image.url }}" alt="{{ slide.title }}" />
+            </a> 
+            </div>
+          {% endfor %}
+        </div>
+        <!-- Slideshow End-->
+        <!-- Featured محصولات Start-->
+        <h3 class="subtitle">ویژه</h3>
+        <div class="owl-carousel product_carousel">
+          {% for product in special_products %}
+          <div class="product-thumb clearfix">
+            <div class="image">
+              <a href="{% url 'product:product_detail' product.uuid %}"
+              ><img src="{{product.image.url}}" alt="{{product.title}}" title="کفش راحتی مردانه" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{% url 'product:product_detail' product.uuid %}">{{product.title}}</a></h4>
+              <p class="price">
+                 <span class="price-new">{{product.get_total_price}}</span> 
+                <span class="price-old">{{product.price}}</span> 
+                <span class="saving">-{{product.discount}}%</span> 
+              </p>
+              <div class="rating"> 
+                <span class="fa fa-stack">
+                  <i class="fa fa-star fa-stack-2x"></i>
+                  <i class="fa fa-star-o fa-stack-2x"></i>
+                </span> 
+                <span class="fa fa-stack">
+                  <i class="fa fa-star fa-stack-2x"></i>
+                  <i class="fa fa-star-o fa-stack-2x"></i>
+                </span> 
+                <span class="fa fa-stack">
+                  <i class="fa fa-star fa-stack-2x"></i>
+                  <i class="fa fa-star-o fa-stack-2x"></i>
+                </span> 
+                <span class="fa fa-stack">
+                  <i class="fa fa-star fa-stack-2x"></i>
+                  <i class="fa fa-star-o fa-stack-2x"></i>
+                </span> 
+                  <span class="fa fa-stack">
+                    <i class="fa fa-star-o fa-stack-2x"></i>
+                  </span> 
+                </div>
+            </div>
+            <div class="button-group">
+              <a class="btn btn-primary" href="{% url 'product:product_detail' product.uuid %}">مشاهده محصول</a>
+              <div class="add-to-links">
+                <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick=""><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="مقایسه this محصولات" onClick=""><i class="fa fa-exchange"></i></button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Featured محصولات End-->
+        <!-- دسته ها محصولات Slider Start-->
+        <div class="category-module" id="latest_category">
+          <h3 class="subtitle"> همه محصولات<a class="viewall" href="category.tpl">نمایش همه</a></h3>
+          <div class="category-module-content">
+            <ul id="sub-cat" class="tabs">
+              {% for cat in parent_category %}
+              <li><a href="#tab-cat{{cat.id}}">{{cat.title}}</a></li>
+              {% endfor %}
+            </ul>
+            {% for cat in parent_category %}
+            <div id="tab-cat{{cat.id}}" class="tab_content">
+              <div class="owl-carousel latest_category_tabs">
+                {% for product in cat.get_child_products %}
+                <div class="product-thumb">
+                  <div class="image"><a href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" alt="{{product.title}}" title="{{product.title}}" class="img-responsive" /></a></div>
+                  <div class="caption">
+                    <h4><a href="{{product.get_absolute_url}}">{{product.title}}</a></h4>
+                    <p class="price"> <span class="price-new">{{product.get_total_price}}</span> <span class="price-old">{{product.price}}</span> <span class="saving">-{{product.discount}}%</span> </p>
+                    <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                  </div>
+                  <div class="button-group">
+                    <a class="btn btn-primary" href="{% url 'product:product_detail' product.uuid %}">مشاهده محصول</a>
+                    <div class="add-to-links">
+                      <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
+                      <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- دسته ها محصولات Slider End-->
+        <!-- دسته ها محصولات Slider Start -->
+        <h3 class="subtitle">جدیدترین محصولات <a class="viewall" href="category.html">نمایش همه</a></h3>
+        <div class="owl-carousel latest_category_carousel">
+          {% for product in new_products %}
+          <div class="product-thumb">
+            <div class="image"><a href="{% url 'product:product_detail' product.uuid %}"><img src="{{product.image.url}}" alt="{{product.title}}" title="{{product.title}}" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{% url 'product:product_detail' product.uuid %}">{{product.title}}</a></h4>
+              <p class="price">{{product.get_total_price}}</p>
+              <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+            </div>
+            <div class="button-group">
+              <a class="btn btn-primary" href="{% url 'product:product_detail' product.uuid %}">مشاهده محصول</a>
+              <div class="add-to-links">
+                <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- دسته ها محصولات Slider End -->
+      </div>
+      <!--Middle Part End-->
+    </div>
+  </div>
+</div>
+{% endblock %}

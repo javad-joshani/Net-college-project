@@ -1,0 +1,75 @@
+{% extends '_base.html' %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+{{site_info.local_name}} | ورود
+{% endblock title %}
+
+
+
+{% block content %}
+<div id="container">
+  <div class="container">
+    <!-- Breadcrumb Start-->
+    <ul class="breadcrumb">
+      <li><a href="{% url 'product:home' %}"><i class="fa fa-home"></i></a></li>
+      <li><a href="/">حساب کاربری</a></li>
+      <li><a href="{% url 'login' %}">ورود</a></li>
+    </ul>
+    <!-- Breadcrumb End-->
+    <div class="row">
+      <!--Middle Part Start-->
+      <div id="content" class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2 class="subtitle">مشتری جدید</h2>
+            <p><strong>ثبت نام حساب کاربری</strong></p>
+            <p>با ایجاد حساب کاربری میتوانید سریعتر خرید کرده، از وضعیت خرید خود آگاه شده و تاریخچه ی سفارشات خود را مشاهده کنید.</p>
+            <a href="/" class="btn btn-primary">ادامه</a> </div>
+          <div class="col-sm-6">
+            <h2 class="subtitle">مشتری قبلی</h2>
+            <form action="" method="POST">{% csrf_token %}
+              {% if form.non_field_errors %}
+              <div class="non-field-errors alert alert-danger" style='direction:rtl;'>
+                  {% for err in form.non_field_errors %}
+                      <p class="text-error" style='color:red;'>{{ err }}</p>
+                  {% endfor %}
+              </div>
+              {% endif %}
+              <div class="form-group">
+                <label class="control-label" for="{{form.username.id_for_label}}">نام کاربری</label>
+                {{form.username|add_class:"form-control"}}
+              </div>
+              {% if form.username.errors %}
+                <div class="errors">
+                  {% for error in form.username.errors %}
+                    <span class="text-error">{{error}}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <div class="form-group">
+                <label class="control-label" for="{{form.password.id_for_label}}">رمز عبور</label>
+                {{form.password|add_class:"form-control"}}
+                <br />
+                {% if form.password.errors %}
+                  <div class="errors">
+                    {% for error in form.password.errors %}
+                      <span class="text-danger">{{error}}</span>
+                    {% endfor %}
+                  </div>
+						    {% endif %}
+                <a href="{% url 'password_reset' %}">فراموشی رمز عبور</a></div>
+              <input type="submit" value="ورود" class="btn btn-primary" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <!--Middle Part End -->
+      <!--Right Part Start -->
+      <!--Right Part End -->
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

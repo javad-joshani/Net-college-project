@@ -1,0 +1,241 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="image/favicon.png" rel="icon" />
+<title>سبد خرید</title>
+
+
+<!-- CSS Part Start-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" type="text/css" href={% static "product/js/bootstrap/css/bootstrap.min.css"  %}/>
+<link rel="stylesheet" type="text/css" href={% static "product/js/bootstrap/css/bootstrap-rtl.min.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/font-awesome/css/font-awesome.min.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/stylesheet.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/owl.carousel.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/owl.transitions.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/responsive.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/stylesheet-rtl.css" %} />
+<link rel="stylesheet" type="text/css" href={% static "product/css/responsive-rtl.css" %} />
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans' type='text/css'>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="wrapper-wide">
+    <div id="header">
+    <!-- Top Bar Start-->
+    <nav id="top" class="htop">
+        <div class="container">
+          <div class="row"> <span class="drop-icon visible-sm visible-xs"><i class="fa fa-align-justify"></i></span>
+            <div class="pull-left flip left-top">
+              <div class="links">
+                <ul>
+                  <li class="mobile"><i class="fa fa-phone"></i>+026 3434515</li>
+                  <li class="email"><a href="mailto:info@marketshop.com"><i class="fa fa-envelope"></i>info@marketshop.com</a></li>
+                  <li class="wrap_custom_block hidden-sm hidden-xs"><a>بلاک سفارشی<b></b></a>
+                    <div class="dropdown-menu custom_block">
+                      <ul>
+                        <li>
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td><img alt="" src={% static 'product/image/banner/cms-block.jpg' %}></td>
+                                <td><img alt="" src={% static "product/image/banner/responsive.jpg" %}></td>
+                              </tr>
+                              <tr>
+                                <td><h4>بلاک های محتوا</h4></td>
+                                <td><h4>قالب واکنش گرا</h4></td>
+                              </tr>
+                              <tr>
+                                <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا تصویری را در آن قرار دهید.</td>
+                                <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا تصویری را در آن قرار دهید.</td>
+                              </tr>
+                              <tr>
+                                <td><strong><a class="btn btn-default btn-sm" href="#">ادامه مطلب</a></strong></td>
+                                <td><strong><a class="btn btn-default btn-sm" href="#">ادامه مطلب</a></strong></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li><a href="#">لیست علاقه مندی (0)</a></li>
+                  <li><a href="#">تسویه حساب</a></li>
+                  <li><a href="{% url 'product:home' %}">خانه</a></li>
+                </ul>
+              </div>
+            </div>
+            <div id="top-links" class="nav pull-right flip">
+              <ul>
+                {% if request.user.is_authenticated %}
+                <div id="currency" class="btn-group">
+                  <button class="btn-link dropdown-toggle" data-toggle="dropdown"> <span><strong><h4> {{user.username}} <i class="bi bi-person-down"></i></h4></strong></span></button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="{% url 'logout' %}">خروج</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'password_change' %}">تغییر پسورد</a></li>
+                    <li>
+                      <a href="{% url 'password_reset' %}">فراموشی پسورد</a></li>
+                  </ul>
+                </div>
+                
+                {% else %}
+                <li><a href="{% url 'login' %}">ورود</a></li>
+                <li><a href="{% url 'signup' %}">ثبت نام</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <!-- Top Bar End-->
+    <!-- Header Start-->
+    <header class="header-row">
+        <div class="container">
+          <div class="table-container">
+            <!-- Logo Start -->
+            <div class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
+              <div id="logo"><a href="{% url 'product:home' %}"><img class="img-responsive" src="{% static 'product/image/logo.png' %}" title="MarketShop" alt="MarketShop" /></a></div>
+            </div>
+            <!-- Logo End -->
+            <b>مجموع کل سبد خرید شما :{{total}}</b>
+            <!-- Mini Cart Start-->
+            <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div id="cart">
+                <a href="{% url 'cart_summary' %}" class="heading dropdown-toggle">
+                <span class="cart-icon pull-left flip"></span>
+                <span>آیتم -</span><span id="cart_quantity">{{cart|length}}</span>
+              </a>
+              </div>
+            </div>
+            <!-- Mini Cart End-->
+          </div>
+        </div>
+    </header>
+    <!-- Header End-->
+    </div>
+    <hr>
+{% if cart_products %}
+{% for product in cart_products %}
+<div class="container" style= "border: 1px solid;border-radius: 25px">
+    <div class="card mb-12" >
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="{{product.title}}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h3 class="card-title">{{product.title}}</h3>
+              <p class="card-text">{{product.description}}</p>
+              {% if product.discount %}
+              قیمت : <strike><span class="text-muted text-decoration">{{product.price}} تومان</span></strike> - 
+              <span class="text-muted text-decoration">{{product.get_total_price}} تومان</span>
+              {% else %}
+              قیمت : <span class="text-muted text-decoration">{{product.price}} تومان</span>
+              {% endif %}
+              <br><br>
+              تعداد : 
+              <select class="form-select form-select-sm" id="select{{product.uuid}}">
+                {% for key,value in quantities.items %}
+                  {% if key == product.uuid|slugify %}
+                    <option selected> {{value}} </option>
+                  {% endif %}
+                {% endfor %}
+                <option value="1"> 1 </option>
+                <option value="2"> 2 </option>
+                <option value="3"> 3 </option>
+                <option value="4"> 4 </option>
+                <option value="5"> 5 </option>
+              </select> 
+              <br><br>
+              <button class="btn btn-primary update-cart" type="button" data-index={{product.uuid}} >ویرایش</button>
+              <button class="btn btn-danger delete-product" type="button" data-index={{product.uuid}}>حذف</button>
+              <a role="button" class="btn btn-secondary" href="{% url 'product:home' %}">بازگشت به خانه</a>
+            </div>
+          </div>
+        </div>
+      </div>      
+</div>
+<br>
+{% endfor %}
+{% else %}
+<center>
+    <br><br><br>
+    <div class="py-6 lg:px-0 bg-neutral-000 rounded-large"><div class="flex justify-center"><div style="width: 200px; height: 150px; line-height: 0;"><img class="w-full inline-block" src="{% static 'product/image/empty-cart.svg' %}" width="200" height="150" alt="empty-cart" title="" style="object-fit: contain;"></div></div><p class="text-h4 text-neutral-800 text-center mt-6">سبد خرید خالی است !</p><p class="text-body-2 text-neutral-600 text-center mt-2">برای مشاهده محصولات وارد لینک زیر شوید :</p> <a style="text-decoration: none" href="{% url 'product:home' %}">صفحه محصولات</a>
+    <div class="flex justify-center items-center mt-6"><a class="px-4 divider" labelsize="medium" href="/promotion-center/"></a><a class="px-4" labelsize="medium" href="/best-selling/"></a></div></div><br><br><br><br><br><br>
+</center>
+{% endif %}
+
+
+
+  {% for message in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
+</div>
+<!-- JS Part Start-->
+<script type="text/javascript" src={% static "product/js/jquery-2.1.1.min.js" %}></script>
+<script type="text/javascript" src={% static "product/js/bootstrap/js/bootstrap.min.js" %}></script>
+<script type="text/javascript" src={% static "product/js/jquery.easing-1.3.min.js" %}></script>
+<script type="text/javascript" src={% static "product/js/jquery.dcjqaccordion.min.js" %}></script>
+<script type="text/javascript" src={% static "product/js/owl.carousel.min.js" %}></script>
+<script type="text/javascript" src={% static "product/js/custom.js" %}></script>
+{% block extra_script %}
+{% endblock %}
+<!-- JS Part End-->
+<script>
+    $(document).on('click' , '.update-cart' , function(e){
+      e.preventDefault();
+  
+      var productid = $(this).data('index')
+      $.ajax({
+        type:'POST',
+        url:'{% url "cart_update" %}',
+        data:{
+          product_id: $(this).data('index'),
+          product_qty: $('#select'+productid+' option:selected').text(),
+          csrfmiddlewaretoken:'{{ csrf_token }}',
+          action:'post'
+        },
+        success:function(json){
+          //console.log(json)
+          //document.getElementById("cart_number").textContent = json.number
+          location.reload();
+        },
+        error:function(xhr,errmsg,err){}
+      })
+    })
+
+    $(document).on('click' , '.delete-product' , function(e){
+        e.preventDefault();
+    
+        $.ajax({
+          type:'POST',
+          url:'{% url "cart_delete" %}',
+          data:{
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken:'{{ csrf_token }}',
+            action:'post'
+          },
+          success:function(json){
+            //console.log(json)
+            //document.getElementById("cart_number").textContent = json.number
+            location.reload();
+          },
+          error:function(xhr,errmsg,err){}
+        })
+      })
+</script>
+</body>
+</html>
